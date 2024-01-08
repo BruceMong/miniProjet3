@@ -51,5 +51,39 @@ namespace PropHunt.UI
         {
             return Regex.Replace(dirtyString, "[^A-Za-z0-9.]", "");
         }
+
+
+        private void Start()
+        {
+            m_clientButton.clicked += StartClient;
+            m_hostButton.clicked += StartHost;
+        }
+
+        /// <summary>
+        /// Starts the host using the given connection data.
+        /// </summary>
+        void StartHost()
+        {
+            SetUtpConnectionData();
+            var result = NetworkManager.Singleton.StartHost();
+            if (result)
+            {
+                NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                return;
+            }
+        }
+
+
+        /// <summary>
+        /// Starts the Client using the given connection data.
+        /// </summary>
+        void StartClient()
+        {
+            SetUtpConnectionData();
+            NetworkManager.Singleton.StartClient();
+        }
     }
+
+
+
 }
