@@ -5,18 +5,20 @@ using Unity.Netcode;
 
 public class LaunchGameButton : MonoBehaviour
 {
-    // Référence au NetworkManager (assurez-vous de l'assigner dans l'éditeur Unity)
     public NetworkManager networkManager;
-
-    // Nom de la scène à charger
-    public string GameSceneName;
 
     private void Start()
     {
-        // Exemple : désactive le bouton si ce n'est pas l'host
-        if (networkManager != null && !networkManager.IsHost)  // Correction ici
+        // Initialise le NetworkManager s'il n'est pas déjà assigné
+        if (networkManager == null)
         {
-            GetComponent<Button>().interactable = false;
+            networkManager = FindObjectOfType<NetworkManager>(); // Trouve l'instance de NetworkManager dans la scène
+        }
+
+        // Exemple : désactive le bouton si ce n'est pas l'host
+        if (!networkManager.IsHost)
+        {
+            gameObject.SetActive(false);
         }
     }
 
@@ -24,10 +26,10 @@ public class LaunchGameButton : MonoBehaviour
     public void LaunchGame()
     {
         // Assurez-vous que l'application est en mode serveur ou host
-        if (networkManager != null && (networkManager.IsServer || networkManager.IsHost))  // Correction ici
+        if ((networkManager.IsServer || networkManager.IsHost))
         {
             // Chargez la scène de jeu
-            SceneManager.LoadScene(GameSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
 }
