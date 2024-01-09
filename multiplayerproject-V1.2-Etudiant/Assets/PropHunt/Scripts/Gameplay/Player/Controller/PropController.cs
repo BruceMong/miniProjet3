@@ -30,6 +30,13 @@ public class PropController : ClassController
     protected Prop focusedProp;
     AsyncOperationHandle<GameObject> _loadPropHandle;
 
+    private NetworkVariable<FixedString64Bytes> _currentMorphName = new NetworkVariable<FixedString64Bytes>();
+
+    [SerializeField] protected float _tauntCooldownTime = 2.0f;
+    private float _nextTauntAvailableTime;
+    private bool _isTauntAvailable = true;
+    ClientRpcParams clientRpcParams;
+
     #region Unity event functions
     protected override void Awake()
     {
@@ -50,7 +57,31 @@ public class PropController : ClassController
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+        //Only the server can assign NetworkVariable values
+        if (IsServer)
+        {
+            _currentMorphName.Value = _baseAddressableName;
+        }
         _targetPropText = _camera.GetComponentInChildren<TMP_Text>();
+        _currentMorphName.OnValueChanged += MorphPropCallback;
+        if (IsClient && !IsOwner && _currentMorphName.Value != _baseAddressableName)
+        {
+            StartCoroutine(LoadPropCoroutine(_currentMorphName.Value.ToString()));
+        }
+
+
+        clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { OwnerClientId }
+            }
+        };
+    }
+
+    private void Update()
+    {
+        CheckForTauntServer();
     }
 
 
@@ -88,20 +119,52 @@ public class PropController : ClassController
     public void MorphProp()
     {
         if (focusedProp == null) return;
-
-        StartCoroutine(LoadPropCoroutine(focusedProp.PropName));
+        ChangeCurrentPropServerRPC(focusedProp.PropName);
     }
+
+
+
 
     public void CancelMorph()
     {
+        ChangeCurrentPropServerRPC(_baseAddressableName);
+        ResetAnimator();
 
     }
 
     public void Taunt()
     {
         var tauntNumber = Random.Range(0, TauntList.Length);
-        PlayTaunt(tauntNumber);
+        if (_isTauntAvailable)
+        {
+            PlayTaunt(tauntNumber);
+            SendTauntServerRpc(tauntNumber);
+        }
     }
+
+
+
+
+    private void CheckForTauntServer()
+    {
+        if (IsServer && Time.time >= _nextTauntAvailableTime)
+        {
+            _isTauntAvailable = true;
+            AllowTauntClientRpc(clientRpcParams);
+        }
+    }
+
+    [ClientRpc]
+    private void AllowTauntClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        if (!IsOwner)
+        {
+
+            return;
+        }
+        _isTauntAvailable = true;
+    }
+
     #endregion
 
     #region Morph
@@ -193,6 +256,34 @@ public class PropController : ClassController
 
     #region Other
 
+
+        /// <summary>
+    /// Send all clients 
+    /// </summary>
+    /// <param name="tauntNumber"></param>
+    [ServerRpc]
+    public void SendTauntServerRpc(int tauntNumber)
+    {
+        if (_isTauntAvailable)
+        {
+            SendTauntClientRpc(tauntNumber);
+
+            _nextTauntAvailableTime = Time.time + _tauntCooldownTime;
+            _isTauntAvailable = false;
+        }
+    }
+
+    [ClientRpc]
+    private void SendTauntClientRpc(int tauntNumber)
+    {
+        if (IsOwner)
+        {
+            _nextTauntAvailableTime = Time.time + _tauntCooldownTime;
+            _isTauntAvailable = false;
+        }
+        PlayTaunt(tauntNumber);
+    }
+
     /// <summary>
     /// Compute the distance between the border on the y axis and its center.
     /// </summary>
@@ -200,6 +291,26 @@ public class PropController : ClassController
     {
         GroundedOffset = _currentRenderer.localBounds.extents.y;
     }
+    /// <summary>
+    /// Callback called when the NetworkVariable _currentMorphName has changed. Start the Coroutine loading the addressable corresponding to the Prop.
+    /// </summary>
+    /// <param name="prevPropName">Previous _currentMorphName value.</param>
+    /// <param name="newPropName">New _currentMorphName value.</param>
+    private void MorphPropCallback(FixedString64Bytes prevPropName, FixedString64Bytes newPropName)
+    {
+        StartCoroutine(LoadPropCoroutine(newPropName.ToString()));
+    }
+
+    /// <summary>
+    /// Change the Network Variable _currentMorphName value to <paramref name="propName"/>.
+    /// </summary>
+    /// <param name="propName">Name of the new prop used as a body.</param>
+    [ServerRpc]
+    private void ChangeCurrentPropServerRPC(string propName)
+    {
+        _currentMorphName.Value = propName;
+    }
+
 
     /// <summary>
     /// Compute the distance between the border of the model and its center.
