@@ -55,6 +55,7 @@ public class PlayerManager : NetworkBehaviour
 
         // Abonnez-vous à l'événement OnValueChanged de la NetworkVariable
         isHunterNetwork.OnValueChanged += HandleTeamChange;
+        SwapTeamLocal(isHunterNetwork.Value);
     }
 
     // Appelé lorsque la NetworkVariable change
