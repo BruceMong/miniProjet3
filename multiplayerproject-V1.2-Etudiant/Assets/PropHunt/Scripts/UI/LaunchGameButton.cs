@@ -7,6 +7,7 @@ public class LaunchGameButton : MonoBehaviour
 {
     // Référence au NetworkManager (assurez-vous de l'assigner dans l'éditeur Unity)
     public NetworkManager networkManager;
+    public GameOnlineManager gameOnlineManager;
     //Button LaunchGameButton;
 
     // Nom de la scène à charger
@@ -19,6 +20,11 @@ public class LaunchGameButton : MonoBehaviour
         if (networkManager == null)
         {
             networkManager = FindObjectOfType<NetworkManager>(); // Trouve l'instance de NetworkManager dans la scène
+        }
+
+        if (gameOnlineManager == null)
+        {
+            gameOnlineManager = FindObjectOfType<GameOnlineManager>(); 
         }
 
         // Exemple : désactive le bouton si ce n'est pas l'host
@@ -37,6 +43,7 @@ public class LaunchGameButton : MonoBehaviour
         {
             // Chargez la scène de jeu
             NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            gameOnlineManager.GameStart();
             //Cursor.lockState = CursorLockMode.None;
 
         }
