@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
@@ -7,34 +8,86 @@ using UnityEngine;
 
 public class GameOnlineManager : NetworkBehaviour
 {
-    private float huntStartTime = 10.0f; // Durée du décompte en secondes
-    private NetworkVariable<float> timeUntilHuntStarts = new NetworkVariable<float>();
-    PlayerManager playerManagerClient = null;
-    public Canvas blackScreenHunter;
 
-    public TextMeshProUGUI lifeText; // Assurez-vous d'avoir using UnityEngine.UI;
-    public TextMeshProUGUI score; // Assurez-vous d'avoir using UnityEngine.UI;
+    private List<PlayerManager> playerManagers = new List<PlayerManager>();
+
+    private float gameStartTime = 10.0f; // Durée du décompte en secondes
+    private NetworkVariable<float> timeUntilGameStarts = new NetworkVariable<float>();
+    PlayerManager playerManagerClient = null;
+    //private static int playerSpawnIndex = 0;
+    
+    private NetworkVariable<bool> _gameStart = new NetworkVariable<bool>(false);
+
+    GameObject spawnPosPlayers;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        blackScreenHunter.enabled = false;
     }
 
-    public TextMeshProUGUI GetLifeText()
-    {
-       return lifeText; 
-    }
-    public TextMeshProUGUI GetScore()
-    {
-         return score; 
-    }
+
 
     public override void OnNetworkSpawn() //OnNetworkSpawn
     {
         //playerManagerClient = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerManager>();
-
+        if (IsServer)
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            _gameStart.OnValueChanged += TpPlayerStart;
+        }
 
     }
+    public bool IsGameStart
+    {
+        get { return _gameStart.Value; }
+
+    }
+
+
+    private void OnClientConnected(ulong clientId)
+    {
+        var playerManager = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<PlayerManager>();
+        if (playerManager != null)
+        {
+            playerManagers.Add(playerManager);
+        }
+    }
+
+    private void OnClientDisconnected(ulong clientId)
+    {
+        var playerManager = playerManagers.FirstOrDefault(p => p.OwnerClientId == clientId);
+        if (playerManager != null)
+        {
+            playerManagers.Remove(playerManager);
+        }
+    }
+
+
+
+
+
+    private void TpPlayerStart(bool oldValue, bool newValue)
+    {
+
+        if (newValue && spawnPosPlayers != null)
+        {
+            // Assurez-vous que la liste est triée
+            Debug.Log("tp");
+            Debug.Log(spawnPosPlayers);
+            Debug.Log(playerManagers);
+            Debug.Log(playerManagers.IndexOf(playerManagerClient));
+
+
+            SortPlayerManagers();            
+            var spawnPosition = spawnPosPlayers.transform.GetChild(playerManagers.IndexOf(playerManagerClient)).position;
+
+            playerManagerClient.TeleportToPos(spawnPosition);
+            playerManagerClient.SetSpawn(spawnPosition);
+        }
+    }
+
+
 
     public void setPlayerManagerLocal(PlayerManager playermanager)
     {
@@ -42,58 +95,48 @@ public class GameOnlineManager : NetworkBehaviour
 
 
     }
+
     public void GameStart()
     {
-        if (playerManagerClient.IsHunter)
-        {
-            blackScreenHunter.enabled = true;
-
-
-            playerManagerClient.EnableInputState(false);
-        }
+        spawnPosPlayers = GameObject.FindGameObjectWithTag("SpawnPlatform");
 
         if (IsServer)
         {
-            StartCoroutine(StartHuntTimer());
+            Debug.Log("game start");
+            _gameStart.Value = true;
+            StartCoroutine(StartGameTimer());
         }
     }
 
-
-    private IEnumerator StartHuntTimer()
+    private IEnumerator StartGameTimer()
     {
-        float remainingTime = huntStartTime;
+        float remainingTime = gameStartTime;
         while (remainingTime > 0)
         {
-            timeUntilHuntStarts.Value = remainingTime;
+            UpdateCountdownClientRpc(remainingTime); // Mettre à jour le décompte sur les clients
             yield return new WaitForSeconds(1f);
             remainingTime--;
-            Debug.Log(remainingTime);
-
+            //Debug.Log(remainingTime);
         }
 
-        ServerStartHuntServerRpc();
-    }
-
-    [ServerRpc]
-    private void ServerStartHuntServerRpc()
-    {
-        // Ici, envoyez un message aux Hunters pour activer leur mouvement et vision
-        StartHuntClientRpc();
-        Debug.Log("Vision active");
-
+        StartGameClientRpc(); // Commencer le jeu sur les clients
     }
 
     [ClientRpc]
-    private void StartHuntClientRpc()
+    private void UpdateCountdownClientRpc(float countdownValue)
     {
-        if (playerManagerClient.IsHunter)
-        {
-            blackScreenHunter.enabled = false;
-            playerManagerClient.EnableInputState(true);
-
-        }
+        
+        playerManagerClient.UpdateCompteurUI("La partie commence dans : \n" + countdownValue);
     }
 
+    [ClientRpc]
+    private void StartGameClientRpc()
+    {
+        // Réactiver le contrôle du joueur
+        // Par exemple, permettre aux joueurs de se déplacer
+        playerManagerClient.UpdateCompteurUI("");
+        Debug.Log("Le jeu commence !");
+    }
 
     List<PlayerManager> GetAllPlayerManagers()
     {
@@ -114,36 +157,10 @@ public class GameOnlineManager : NetworkBehaviour
 
     public void CheckForGameOver()
     {
-        bool isAnyHunterAlive = false;
-        bool isAnyPropAlive = false;
-
-        List<PlayerManager> allPlayerManagers = GetAllPlayerManagers();
-
-        foreach (PlayerManager player in allPlayerManagers)
-        {
-            if (player.Life > 0) // Si le joueur est en vie
-            {
-                if (player.IsHunter)
-                {
-                    isAnyHunterAlive = true;
-                }
-                else
-                {
-                    isAnyPropAlive = true;
-                }
-            }
-        }
-
-        // Vérifiez les conditions de fin de jeu
-        if (!isAnyHunterAlive)
-        {
-            Debug.Log("GameOver - Prop Team Wins!");
-        }
-        else if (!isAnyPropAlive)
-        {
-            Debug.Log("GameOver - Hunter Team Wins!");
-        }
     }
 
-
+    private void SortPlayerManagers()
+    {
+        playerManagers = playerManagers.OrderBy(pm => pm.OwnerClientId).ToList();
+    }
 }

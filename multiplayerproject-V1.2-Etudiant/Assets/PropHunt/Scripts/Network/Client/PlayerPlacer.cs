@@ -22,7 +22,7 @@ namespace PropHunt.Gameplay
         private IEnumerator PlacePlayerCoroutine()
         {
             yield return new WaitForEndOfFrame();
-            NetworkManager.Singleton.LocalClient.PlayerObject.transform.position = new Vector3(0, 1.5f, 0);
+            //NetworkManager.Singleton.LocalClient.PlayerObject.transform.position = new Vector3(0, 1.5f, 0);
 
         }
     }

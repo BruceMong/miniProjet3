@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -19,6 +20,7 @@ public class PlayerManager : NetworkBehaviour
     private NetworkVariable<int> _life = new NetworkVariable<int>(5);
     public TextMeshProUGUI lifeText; // Assurez-vous d'avoir using UnityEngine.UI;
     public TextMeshProUGUI score; // Assurez-vous d'avoir using UnityEngine.UI;
+    public TextMeshProUGUI _compteur; // Assurez-vous d'avoir using UnityEngine.UI;
 
 
     public ActionInput _actionInput;
@@ -26,6 +28,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] PropController _propController;
     [SerializeField] HunterController _hunterController;
     GameOnlineManager _gameOnlineManager;
+    UnityEngine.Vector3 _spawnPoint = new UnityEngine.Vector3(0,0,0);
 
     private void Awake()
     {
@@ -59,10 +62,14 @@ public class PlayerManager : NetworkBehaviour
             Camera.gameObject.SetActive(true);
             _movementController.SetAnimator(GetComponent<Animator>());
             _gameOnlineManager.setPlayerManagerLocal(this);
-            lifeText = _gameOnlineManager.GetLifeText();
-            score = _gameOnlineManager.GetScore();
-            _life.OnValueChanged += UpdateLifeUI;
-            UpdateLifeUI(_life.Value, _life.Value); // Pour initialiser l'affichage au démarrage
+
+            GameObject uiPlayerObject = GameObject.FindWithTag("UIPlayer");
+            _compteur = uiPlayerObject.transform.Find("compteur").GetComponent<TextMeshProUGUI>();
+
+            //lifeText = _gameOnlineManager.GetLifeText();
+            //score = _gameOnlineManager.GetScore();
+            //_life.OnValueChanged += UpdateLifeUI;
+            //UpdateLifeUI(_life.Value, _life.Value); // Pour initialiser l'affichage au démarrage
         }
         else
         {
@@ -80,14 +87,19 @@ public class PlayerManager : NetworkBehaviour
 
     private void UpdateLifeUI(int oldValue, int newValue)
     {
-        // Mettez à jour votre élément UI ici
-        Debug.Log(lifeText);
-        Debug.Log(oldValue);
-        if (lifeText != null)
-        {
-            lifeText.text = "Vie : " + newValue;
-            if(newValue <= 0) lifeText.text = "Eliminée";
-        }
+        //// Mettez à jour votre élément UI ici
+        //Debug.Log(lifeText);
+        //Debug.Log(oldValue);
+        //if (lifeText != null)
+        //{
+        //    lifeText.text = "Vie : " + newValue;
+        //    if(newValue <= 0) lifeText.text = "Eliminée";
+        //}
+    }
+
+    public void UpdateCompteurUI(String text)
+    {
+        _compteur.text = text.ToString();
     }
 
 
@@ -115,7 +127,12 @@ public class PlayerManager : NetworkBehaviour
         get { return _life.Value; }
     }
 
-    
+    public void SetSpawn(UnityEngine.Vector3 spawnPoint)
+    {
+        _spawnPoint = spawnPoint;
+
+    }
+
 
     // Méthode appelée localement pour changer d'équipe
     private void SwapTeamLocal(bool isHunter)
@@ -167,6 +184,19 @@ public class PlayerManager : NetworkBehaviour
         }
     }
     
+    public void TeleportToPos(UnityEngine.Vector3 _vector)
+    {
+           StartCoroutine(PlacePlayerCoroutine(_vector));
+
+    }
+
+    private IEnumerator PlacePlayerCoroutine(UnityEngine.Vector3 _vector)
+    {
+        yield return new WaitForEndOfFrame();
+        this.gameObject.transform.position = _vector;
+
+
+    }
 
     // Méthode appelée par l'entrée utilisateur pour changer d'équipe
     public void SwapTeam()
@@ -183,8 +213,13 @@ public class PlayerManager : NetworkBehaviour
         Cursor.lockState = isLocked ? CursorLockMode.Locked : CursorLockMode.None;
         _movementController.cursorLocked = isLocked;
     }
+    public void Respawn()
+    {
+        //faire respawn au dernier point
+        TeleportToPos(_spawnPoint);
+    }
 
 
-
+   
 
 }

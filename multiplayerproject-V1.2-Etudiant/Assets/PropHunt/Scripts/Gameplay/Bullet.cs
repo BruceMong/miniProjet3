@@ -3,7 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 using System;
 
-public class Bullet : NetworkBehaviour
+public class BulletPlayer : NetworkBehaviour
 {
     public float speed = 10f;
     public float lifeTime = 5f;

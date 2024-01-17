@@ -134,6 +134,15 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Respawn"",
+                    ""type"": ""Button"",
+                    ""id"": ""c164ccc7-08bd-4990-9d0f-2950b7f9621d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,17 +324,6 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b7110c13-30e5-40e1-bbea-b121b24d6c9a"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwapTeam"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""733600e5-59d3-45fa-ba92-4dc9bee64200"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
@@ -343,6 +341,28 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UnlockCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec0f5d6d-6fb2-4ab1-b321-162a2731e35d"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Respawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10b541c7-6e6f-4d9f-8584-16187ba03f1b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapTeam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -365,6 +385,7 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
         m_gameplay_SwapTeam = m_gameplay.FindAction("SwapTeam", throwIfNotFound: true);
         m_gameplay_TriggerMenu = m_gameplay.FindAction("TriggerMenu", throwIfNotFound: true);
         m_gameplay_UnlockCursor = m_gameplay.FindAction("UnlockCursor", throwIfNotFound: true);
+        m_gameplay_Respawn = m_gameplay.FindAction("Respawn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -438,6 +459,7 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_SwapTeam;
     private readonly InputAction m_gameplay_TriggerMenu;
     private readonly InputAction m_gameplay_UnlockCursor;
+    private readonly InputAction m_gameplay_Respawn;
     public struct GameplayActions
     {
         private @SimpleControls m_Wrapper;
@@ -454,6 +476,7 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
         public InputAction @SwapTeam => m_Wrapper.m_gameplay_SwapTeam;
         public InputAction @TriggerMenu => m_Wrapper.m_gameplay_TriggerMenu;
         public InputAction @UnlockCursor => m_Wrapper.m_gameplay_UnlockCursor;
+        public InputAction @Respawn => m_Wrapper.m_gameplay_Respawn;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -499,6 +522,9 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
             @UnlockCursor.started += instance.OnUnlockCursor;
             @UnlockCursor.performed += instance.OnUnlockCursor;
             @UnlockCursor.canceled += instance.OnUnlockCursor;
+            @Respawn.started += instance.OnRespawn;
+            @Respawn.performed += instance.OnRespawn;
+            @Respawn.canceled += instance.OnRespawn;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -539,6 +565,9 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
             @UnlockCursor.started -= instance.OnUnlockCursor;
             @UnlockCursor.performed -= instance.OnUnlockCursor;
             @UnlockCursor.canceled -= instance.OnUnlockCursor;
+            @Respawn.started -= instance.OnRespawn;
+            @Respawn.performed -= instance.OnRespawn;
+            @Respawn.canceled -= instance.OnRespawn;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -570,5 +599,6 @@ public partial class @SimpleControls: IInputActionCollection2, IDisposable
         void OnSwapTeam(InputAction.CallbackContext context);
         void OnTriggerMenu(InputAction.CallbackContext context);
         void OnUnlockCursor(InputAction.CallbackContext context);
+        void OnRespawn(InputAction.CallbackContext context);
     }
 }

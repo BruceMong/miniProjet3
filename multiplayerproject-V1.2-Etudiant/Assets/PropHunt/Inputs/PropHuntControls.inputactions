@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Respawn",
+                    "type": "Button",
+                    "id": "c164ccc7-08bd-4990-9d0f-2950b7f9621d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -293,17 +302,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b7110c13-30e5-40e1-bbea-b121b24d6c9a",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwapTeam",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "733600e5-59d3-45fa-ba92-4dc9bee64200",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
@@ -321,6 +319,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "UnlockCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec0f5d6d-6fb2-4ab1-b321-162a2731e35d",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Respawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10b541c7-6e6f-4d9f-8584-16187ba03f1b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapTeam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

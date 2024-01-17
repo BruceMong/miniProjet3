@@ -91,6 +91,7 @@ public class ActionInput : MonoBehaviour
         //TODO : Bloquer ça pendant le jeu
         if (!context.performed) return;
         _playerManager.SwapTeam();
+        //bloquer pour l'instant
     }
 
     public void OnCursorLockToggle(CallbackContext context)
@@ -99,6 +100,12 @@ public class ActionInput : MonoBehaviour
         _playerManager.ToggleCursorLock();
     }
 
-
+    public void OnRespawn(CallbackContext context)
+    {
+        //TODO : Bloquer ça pendant le jeu
+        if (!context.performed) return;
+        _playerManager.Respawn();
+        //bloquer pour l'instant
+    }
 
 }

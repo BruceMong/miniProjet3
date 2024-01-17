@@ -14,8 +14,9 @@ using static Unity.Netcode.NetworkManager;
 public class ConnectionApprovalHandler : MonoBehaviour
 {
     private NetworkManager m_NetworkManager;
+    public GameOnlineManager m_GameOnlineManager;
 
-    public int MaxNumberOfPlayers = 6;
+    public int MaxNumberOfPlayers = 10;
     private int _numberOfPlayers = 0;
 
     private void Start()
@@ -36,11 +37,18 @@ public class ConnectionApprovalHandler : MonoBehaviour
     {
         bool isApproved = true;
         _numberOfPlayers++;
+        //Debug.Log(m_GameOnlineManager);
+        if (m_GameOnlineManager.IsGameStart == true)
+        {
+            isApproved = false;
+            response.Reason = "Game Already Start";
+        }
         if (_numberOfPlayers > MaxNumberOfPlayers)
         {
             isApproved = false;
             response.Reason = "Too many players in lobby!";
         }
+
         response.Approved = isApproved;
         response.CreatePlayerObject = isApproved;
         response.Position = new Vector3(0, 3, 0);

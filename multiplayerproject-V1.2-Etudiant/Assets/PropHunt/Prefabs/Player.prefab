@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 3508406380125783317}
   _animator: {fileID: 2627273686261720279}
-  target: {fileID: 0}
   bulletPrefab: {fileID: 4874091484471165846, guid: c2369210c67566340856ec9a405575cc, type: 3}
   fireRate: 1.5
   firePoint: {fileID: 5943946520600973130}
@@ -659,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3596609513
+  GlobalObjectIdHash: 1292728072
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -755,6 +754,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
+  lifeText: {fileID: 0}
+  score: {fileID: 0}
   _actionInput: {fileID: 3979293131715400837}
   _animator: {fileID: 2627273686261720279}
   _propController: {fileID: 5144100549423255631}
@@ -976,6 +977,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 81e2163f-fce2-41ac-a8b9-a263579cde16
     m_ActionName: gameplay/UnlockCursor
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3979293131715400837}
+        m_TargetAssemblyTypeName: ActionInput, Assembly-CSharp
+        m_MethodName: OnRespawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c164ccc7-08bd-4990-9d0f-2950b7f9621d
+    m_ActionName: gameplay/Respawn[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: gameplay

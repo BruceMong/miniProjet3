@@ -44,7 +44,7 @@ public class HunterController : ClassController
         NetworkObject bulletNetObj = bullet.GetComponent<NetworkObject>();
         bulletNetObj.Spawn();
 
-        Bullet bulletComponent = bullet.GetComponent<Bullet>();
+        BulletPlayer bulletComponent = bullet.GetComponent<BulletPlayer>();
         if (bulletComponent != null)
         {
             Vector3 shootDirection = firePoint.forward;

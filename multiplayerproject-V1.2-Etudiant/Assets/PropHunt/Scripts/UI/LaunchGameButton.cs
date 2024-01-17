@@ -42,8 +42,9 @@ public class LaunchGameButton : MonoBehaviour
         if (networkManager != null && (networkManager.IsServer || networkManager.IsHost))  // Correction ici
         {
             // Chargez la scène de jeu
+            NetworkManager.Singleton.LocalClient.PlayerObject?.GetComponent<PlayerManager>().ToggleCursorLock();
             NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
-            gameOnlineManager.GameStart();
+            //gameOnlineManager.GameStart();
             //Cursor.lockState = CursorLockMode.None;
 
         }
