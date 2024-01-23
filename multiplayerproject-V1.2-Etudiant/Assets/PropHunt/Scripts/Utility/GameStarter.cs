@@ -1,15 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class GameStarter : MonoBehaviour
+using Unity.Netcode;
+
+
+
+public class GameStarter : NetworkBehaviour
 {
     public GameOnlineManager gameOnlineManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (gameOnlineManager == null)
+        if (gameOnlineManager == null && IsServer)
         {
             gameOnlineManager = FindObjectOfType<GameOnlineManager>();
             gameOnlineManager.GameStart();

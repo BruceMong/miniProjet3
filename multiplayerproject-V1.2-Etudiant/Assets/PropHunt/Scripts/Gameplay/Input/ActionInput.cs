@@ -90,7 +90,7 @@ public class ActionInput : MonoBehaviour
     {
         //TODO : Bloquer ça pendant le jeu
         if (!context.performed) return;
-        _playerManager.SwapTeam();
+        //_playerManager.SwapTeam();
         //bloquer pour l'instant
     }
 

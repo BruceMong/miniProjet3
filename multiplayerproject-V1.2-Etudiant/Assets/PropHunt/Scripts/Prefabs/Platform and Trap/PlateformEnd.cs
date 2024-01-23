@@ -7,28 +7,28 @@ public class PlateformEnd : MonoBehaviour
 {
 
     GameOnlineManager _gameOnlineManager;
-    bool finish = false;
+    bool localPlayerRaceFinish = false;
     void Start()
     {
             _gameOnlineManager = FindObjectOfType<GameOnlineManager>();
+
     }
 
     void OnTriggerEnter(Collider collision)
     {
-        if (_gameOnlineManager.IsGameStart == false || finish) return;
+
+        if (_gameOnlineManager.IsGameStart == false || localPlayerRaceFinish == true) return;
 
         PlayerManager playerColManager = collision.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
 
 
         if (NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerManager>() == playerColManager)
         {
-            Debug.Log("checkpoint valided");
-            // Modifier la position de spawn avec Y augmenté de 3 unités
-            Vector3 spawnPosition = gameObject.transform.position + new Vector3(0, 3, 0);
-            playerColManager.SetSpawn(spawnPosition);
+            Debug.Log("Arrivé franchi");
 
 
-
+            playerColManager.PlayerCrossedFinishLineServerRpc(_gameOnlineManager._pseudo);
+            localPlayerRaceFinish = true;
         }
 
     }

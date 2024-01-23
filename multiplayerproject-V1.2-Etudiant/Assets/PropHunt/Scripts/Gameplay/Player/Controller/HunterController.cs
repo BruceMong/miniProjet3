@@ -48,7 +48,7 @@ public class HunterController : ClassController
         if (bulletComponent != null)
         {
             Vector3 shootDirection = firePoint.forward;
-            bulletComponent.Initialize(shootDirection, transform.parent.gameObject);
+            //bulletComponent.Initialize(shootDirection, transform.parent.gameObject);
         }
     }
 public override void Activate()

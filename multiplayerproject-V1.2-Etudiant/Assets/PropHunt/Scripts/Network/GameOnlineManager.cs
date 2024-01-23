@@ -1,24 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GameOnlineManager : NetworkBehaviour
 {
 
     private List<PlayerManager> playerManagers = new List<PlayerManager>();
+    private List<ulong> ResultPlayersList = new List<ulong>();
 
-    private float gameStartTime = 10.0f; // Durée du décompte en secondes
-    private NetworkVariable<float> timeUntilGameStarts = new NetworkVariable<float>();
-    PlayerManager playerManagerClient = null;
+    private float _gameStartTime = 10.0f; // Durée du décompte en secondes
+    private float _gameEndTime = 10.0f; // Durée du décompte en secondes
+    //private NetworkVariable<float> timeUntilGameStarts = new NetworkVariable<float>();
+    PlayerManager _playerManagerClient = null;
     //private static int playerSpawnIndex = 0;
     
     private NetworkVariable<bool> _gameStart = new NetworkVariable<bool>(false);
-
+    private string _result = "";
+    //private bool _raceFinished = false;
     GameObject spawnPosPlayers;
+
+    public String _pseudo;
 
     private void Awake()
     {
@@ -29,13 +36,14 @@ public class GameOnlineManager : NetworkBehaviour
 
     public override void OnNetworkSpawn() //OnNetworkSpawn
     {
-        //playerManagerClient = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerManager>();
+        //_playerManagerClient = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerManager>();
         if (IsServer)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            _gameStart.OnValueChanged += TpPlayerStart;
         }
+        //_gameStart.OnValueChanged += TpPlayerStart;
+
 
     }
     public bool IsGameStart
@@ -44,12 +52,17 @@ public class GameOnlineManager : NetworkBehaviour
 
     }
 
+    public PlayerManager getLocalPlayerManager()
+    { return _playerManagerClient; }
+
 
     private void OnClientConnected(ulong clientId)
     {
         var playerManager = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<PlayerManager>();
+        Debug.Log(clientId);
         if (playerManager != null)
         {
+            playerManager._idClient = clientId;
             playerManagers.Add(playerManager);
         }
     }
@@ -67,100 +80,180 @@ public class GameOnlineManager : NetworkBehaviour
 
 
 
-    private void TpPlayerStart(bool oldValue, bool newValue)
+    private void TpPlayersStart()
     {
+        SortPlayerManagers();
 
-        if (newValue && spawnPosPlayers != null)
+        foreach (PlayerManager playerManager in playerManagers)
         {
-            // Assurez-vous que la liste est triée
-            Debug.Log("tp");
-            Debug.Log(spawnPosPlayers);
-            Debug.Log(playerManagers);
-            Debug.Log(playerManagers.IndexOf(playerManagerClient));
+
+            var rpcParams = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { playerManager._idClient }
+                }
+            };
+
+            if (_gameStart.Value == true && spawnPosPlayers != null)
+            {
+                //Debug.Log(spawnPosPlayers);
+                //Debug.Log(playerManagers);
+                //Debug.Log(playerManagers.IndexOf(_playerManagerClient));
 
 
-            SortPlayerManagers();            
-            var spawnPosition = spawnPosPlayers.transform.GetChild(playerManagers.IndexOf(playerManagerClient)).position;
+                var spawnPosition = spawnPosPlayers.transform.GetChild(playerManagers.IndexOf(playerManager)).position;
+                spawnPosition.y += 5;
+                TeleportClientRpc(spawnPosition, rpcParams );
 
-            playerManagerClient.TeleportToPos(spawnPosition);
-            playerManagerClient.SetSpawn(spawnPosition);
+
+            }
+            if(_gameStart.Value == false)
+            {
+                UnityEngine.Vector3 spawnLobby = new UnityEngine.Vector3(0, 5, 0);
+                TeleportClientRpc(spawnLobby, rpcParams);
+
+            }
         }
+
+    }
+
+    [ClientRpc]
+    public void TeleportClientRpc(Vector3 Pos, ClientRpcParams rpcParams )
+    {
+        var playerManager = getLocalPlayerManager();
+
+        playerManager.TeleportToPos(Pos);
+        playerManager.SetSpawn(Pos);
     }
 
 
 
     public void setPlayerManagerLocal(PlayerManager playermanager)
     {
-        if(playerManagerClient == null) playerManagerClient = playermanager;
+        if(_playerManagerClient == null) _playerManagerClient = playermanager;
 
 
     }
 
     public void GameStart()
     {
-        spawnPosPlayers = GameObject.FindGameObjectWithTag("SpawnPlatform");
-
         if (IsServer)
         {
+            spawnPosPlayers = GameObject.FindGameObjectWithTag("SpawnPlatform");
+            Debug.Log(spawnPosPlayers);
             Debug.Log("game start");
             _gameStart.Value = true;
+            StartCompteurRaceClientRpc();
             StartCoroutine(StartGameTimer());
+            TpPlayersStart();
+
+
+
         }
     }
 
     private IEnumerator StartGameTimer()
     {
-        float remainingTime = gameStartTime;
+        float remainingTime = _gameStartTime;
         while (remainingTime > 0)
         {
-            UpdateCountdownClientRpc(remainingTime); // Mettre à jour le décompte sur les clients
+            UpdateCountdownClientRpc("La partie commence dans : \n" + remainingTime); // Mettre à jour le décompte sur les clients
             yield return new WaitForSeconds(1f);
             remainingTime--;
             //Debug.Log(remainingTime);
         }
 
-        StartGameClientRpc(); // Commencer le jeu sur les clients
+        StartRaceClientRpc(); 
     }
 
     [ClientRpc]
-    private void UpdateCountdownClientRpc(float countdownValue)
+    private void UpdateCountdownClientRpc(string str)
     {
         
-        playerManagerClient.UpdateCompteurUI("La partie commence dans : \n" + countdownValue);
+        _playerManagerClient.UpdateCompteurUI(str);
     }
 
     [ClientRpc]
-    private void StartGameClientRpc()
+    private void StartCompteurRaceClientRpc()
+    {
+        _result = "";
+        _playerManagerClient.UpdateScoreUI(_result);
+        _playerManagerClient.DisableController(true);
+    }
+    [ClientRpc]
+    private void StartRaceClientRpc()
     {
         // Réactiver le contrôle du joueur
         // Par exemple, permettre aux joueurs de se déplacer
-        playerManagerClient.UpdateCompteurUI("");
+        _playerManagerClient.DisableController(false);
+
+        _playerManagerClient.UpdateCompteurUI("");
         Debug.Log("Le jeu commence !");
     }
 
-    List<PlayerManager> GetAllPlayerManagers()
+
+
+
+
+
+
+    private IEnumerator StartEndTimer()
     {
-        List<PlayerManager> allPlayerManagers = new List<PlayerManager>();
-
-        foreach (var client in NetworkManager.Singleton.ConnectedClients)
+        float remainingTime = _gameEndTime;
+        while (remainingTime > 0)
         {
-            PlayerManager playerManager = client.Value.PlayerObject.GetComponent<PlayerManager>();
-            if (playerManager != null)
-            {
-                allPlayerManagers.Add(playerManager);
-            }
+            UpdateCountdownClientRpc("La partie se termine dans : \n" + remainingTime); // Mettre à jour le décompte sur les clients
+            yield return new WaitForSeconds(1f);
+            remainingTime--;
         }
+        RaceFinishedClientRpc();
+        TpPlayersStart();
+        ResultPlayersList.Clear();
+        //go back lobby + reset var just keep score 
+        _gameStart.Value = false;
+        NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
 
-        return allPlayerManagers;
     }
 
-
-    public void CheckForGameOver()
+    public void RaceOver()
     {
+        //_raceFinished = true;
+        StartCoroutine(StartEndTimer());
+
     }
 
     private void SortPlayerManagers()
     {
         playerManagers = playerManagers.OrderBy(pm => pm.OwnerClientId).ToList();
     }
+
+
+    public int CalculatePlayerRank(ulong _idClient)
+    {
+
+        if (ResultPlayersList.Contains(_idClient))
+            return ResultPlayersList.IndexOf(_idClient);
+        else
+            ResultPlayersList.Add(_idClient);
+        return ResultPlayersList.IndexOf(_idClient);
+
+    }
+
+    [ClientRpc]
+    public void PlayerCrossedFinishLineClientRpc(String pseudo, int playerRank)
+    {
+        _result += playerRank + " - " + pseudo + "\n";
+        _playerManagerClient.UpdateScoreUI(_result);
+    }
+
+    [ClientRpc]
+    private void RaceFinishedClientRpc()
+    {
+
+        _playerManagerClient.UpdateCompteurUI("");
+
+    }
+
+
 }

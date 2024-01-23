@@ -23,15 +23,21 @@ public class Shooter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<CharacterController>() != null)
+        Transform playerTransform = other.gameObject.transform.root.gameObject.transform;
+        PlayerManager playerColManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
+
+        if (playerColManager != null)
         {
-            target = other.transform;
+            target = playerTransform;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<CharacterController>() != null)
+        //Transform playerTransform = other.gameObject.transform.root.gameObject.transform;
+        PlayerManager playerColManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
+
+        if (playerColManager != null)
         {
             target = null;
         }
@@ -68,8 +74,9 @@ public class Shooter : MonoBehaviour
         if (bulletScript != null)
         {
             Vector3 shootingDirection = (target.position - firePoint.position).normalized;
-            shootingDirection.y += 0.27f; // Vous pouvez ajuster cette valeur pour obtenir l'angle souhaité
+            //shootingDirection.y += 0.27f; // Vous pouvez ajuster cette valeur pour obtenir l'angle souhaité
             bulletScript.Initialize(shootingDirection);
+
         }
 
         Debug.Log("Tir");

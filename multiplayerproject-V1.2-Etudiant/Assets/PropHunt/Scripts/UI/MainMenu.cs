@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -13,13 +14,16 @@ namespace PropHunt.UI
 
         private VisualElement m_RootMenu;
 
-        private TextField m_ipAddress;
+        private TextField m_ipAddress, m_pseudo;
         private IntegerField m_port;
 
         private Button m_clientButton, m_hostButton;
+        GameOnlineManager _gameOnlineManager;
+
 
         void Awake()
         {
+
             m_RootMenu = mainMenu.rootVisualElement;
 
             m_clientButton = m_RootMenu.Query<Button>("ClientButton");
@@ -27,6 +31,10 @@ namespace PropHunt.UI
 
             m_ipAddress = m_RootMenu.Query<TextField>("IpField");
             m_port = m_RootMenu.Query<IntegerField>("PortField");
+            m_pseudo = m_RootMenu.Query<TextField>("pseudoField");
+            _gameOnlineManager = FindObjectOfType<GameOnlineManager>();
+
+
         }
         /// <summary>
         /// Use sanitized IP and Port to set up the connection.
@@ -62,12 +70,24 @@ namespace PropHunt.UI
         /// <summary>
         /// Starts the host using the given connection data.
         /// </summary>
+        /// 
+        void setPseudoLocal()
+        {
+
+            //PlayerManager playerManLocal = NetworkManager.Singleton.LocalClient.PlayerObject?.GetComponent<PlayerManager>();
+            //playerManLocal._pseudo = m_pseudo.text;
+            _gameOnlineManager._pseudo = m_pseudo.text;
+            //Debug.Log(m_pseudo.text);
+            //Debug.Log(_gameOnlineManager);
+
+        }
         void StartHost()
         {
             SetUtpConnectionData();
             var result = NetworkManager.Singleton.StartHost();
             if (result)
             {
+                setPseudoLocal();
                 NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
                 return;
             }
@@ -79,8 +99,10 @@ namespace PropHunt.UI
         /// </summary>
         void StartClient()
         {
+            setPseudoLocal();
             SetUtpConnectionData();
             NetworkManager.Singleton.StartClient();
+
         }
     }
 
