@@ -7,11 +7,9 @@ public class Trampoline : MonoBehaviour
     public float forceMagnitude = 380f; // Ajustez cette valeur en fonction de la force souhaitée
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Trampsss");
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("Tramp");
 
             Rigidbody playerRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             ActionInput actionInput = collision.gameObject.GetComponent<ActionInput>();

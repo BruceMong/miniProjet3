@@ -154,6 +154,10 @@ public class PlayerManager : NetworkBehaviour
     private IEnumerator PlacePlayerCoroutine(UnityEngine.Vector3 _vector)
     {
         yield return new WaitForEndOfFrame();
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+
+        rb.velocity = UnityEngine.Vector3.zero;
+        rb.angularVelocity = UnityEngine.Vector3.zero;
         this.gameObject.transform.position = _vector;
 
 

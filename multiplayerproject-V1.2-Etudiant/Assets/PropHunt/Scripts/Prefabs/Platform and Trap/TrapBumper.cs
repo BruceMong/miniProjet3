@@ -1,35 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class TrapBumper : MonoBehaviour
 {
     public float forceMagnitude = 1000f; // Ajustez cette valeur en fonction de la force souhaitée
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
-        //Debug.Log(collision.gameObject);
-        //Debug.Log(collision.gameObject.GetType());
+        Rigidbody rb = collision.gameObject.transform.root.gameObject.GetComponent<Rigidbody>();
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (rb)
         {
-            Debug.Log("Bump");
 
-            Rigidbody playerRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-            ActionInput actionInput = collision.gameObject.GetComponent<ActionInput>();
+            Vector3 direction = collision.transform.position - transform.position;
+            direction.y = 0; // Élimine la composante verticale
 
-            
-
-            if (playerRigidbody != null)
-            {
-                //actionInput.jump = true; // marche pas c'est pas ouf
-
-                Vector3 direction = collision.transform.position - transform.position;
-                direction = -direction.normalized;
-
-                // Appliquez la force
-                playerRigidbody.AddForce(direction * forceMagnitude, ForceMode.Impulse);
-            }
+            rb.AddForce(direction * forceMagnitude, ForceMode.Impulse);
         }
     }
 }

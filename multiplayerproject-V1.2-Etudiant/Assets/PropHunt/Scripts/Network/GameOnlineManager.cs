@@ -59,7 +59,7 @@ public class GameOnlineManager : NetworkBehaviour
     private void OnClientConnected(ulong clientId)
     {
         var playerManager = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<PlayerManager>();
-        Debug.Log(clientId);
+        //Debug.Log(clientId);
         if (playerManager != null)
         {
             playerManager._idClient = clientId;

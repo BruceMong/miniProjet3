@@ -1,21 +1,23 @@
-using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
+using System.Collections;
 
-public class Shooter : MonoBehaviour
+public class Shooter : NetworkBehaviour
 {
-    public Transform target; // Référence au transform du joueur
-    public float rotationSpeed = 2.0f; // Vitesse de rotation de la tourelle
-    public GameObject bulletPrefab; // Prefab du projectile
-    public float fireRate = 1.5f; // Taux de tir (temps en secondes entre les tirs)
-    
+    public Transform target;
+    public float rotationSpeed = 2.0f;
+    public GameObject bulletPrefab;
+    public float fireRate = 1.5f;
+
     private bool isShooting = false;
+    public Transform firePoint;
 
-    public Transform firePoint; // Point de feu pour instancier les balles
 
-    private void Update()
+    void Update()
     {
-        if (target != null)
+        if (IsServer && target != null)
         {
+
             RotateTowardsTarget();
             TryShoot();
         }
@@ -23,6 +25,8 @@ public class Shooter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!IsServer) return;
+
         Transform playerTransform = other.gameObject.transform.root.gameObject.transform;
         PlayerManager playerColManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
 
@@ -34,7 +38,8 @@ public class Shooter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //Transform playerTransform = other.gameObject.transform.root.gameObject.transform;
+        if (!IsServer) return;
+
         PlayerManager playerColManager = other.gameObject.transform.root.gameObject.GetComponent<PlayerManager>();
 
         if (playerColManager != null)
@@ -67,23 +72,23 @@ public class Shooter : MonoBehaviour
     {
         isShooting = true;
 
-        // Création et lancement du projectile
         GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+        NetworkObject bulletNetObj = bulletInstance.GetComponent<NetworkObject>();
 
+        if (bulletNetObj != null)
+        {
+            bulletNetObj.Spawn();
+        }
+
+        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
         if (bulletScript != null)
         {
             Vector3 shootingDirection = (target.position - firePoint.position).normalized;
-            //shootingDirection.y += 0.27f; // Vous pouvez ajuster cette valeur pour obtenir l'angle souhaité
             bulletScript.Initialize(shootingDirection);
-
         }
-
-        Debug.Log("Tir");
 
         yield return new WaitForSeconds(fireRate);
 
         isShooting = false;
     }
-
 }
