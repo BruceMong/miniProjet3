@@ -12,7 +12,7 @@ public class RobotController : MonoBehaviour
 
     private bool hasBeenClicked = false;
 
-    // ...
+    
 
     private void OnEnable()
     {
@@ -35,13 +35,12 @@ public class RobotController : MonoBehaviour
             }
             else
             {
-                // Si vous souhaitez effectuer une action différente après le premier clic,
-                // vous pouvez le gérer ici.
+                
             }
         }
         else
         {
-            // Réinitialiser le statut de clic lorsque le bouton est relâché
+            
             hasBeenClicked = false;
         }
     }
@@ -50,7 +49,7 @@ public class RobotController : MonoBehaviour
     {
         CubeCreator.CreateCube(t);
 
-        // Désactiver le rayon après avoir créé le cube (si applicable)
+        
         if (ray != null)
         {
             ray.enabled = false;

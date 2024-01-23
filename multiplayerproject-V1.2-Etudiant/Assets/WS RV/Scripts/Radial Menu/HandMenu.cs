@@ -18,9 +18,17 @@ public class HandMenu : MonoBehaviour
 
     }
 
+    public void CloseMenu()
+    {
+
+        Show(false);
+    }
+
+
     public void Show(bool value)
     {
         gameObject.SetActive(value);
+
     }
 
 }
