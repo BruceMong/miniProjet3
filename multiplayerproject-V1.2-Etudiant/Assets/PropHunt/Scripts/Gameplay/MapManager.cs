@@ -11,6 +11,7 @@ public class MapManager : MonoBehaviour
     string path = null;
 
     public List<Transform> SpawnPoints;
+    public string _mapSelected;
     void Start()
     {
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)

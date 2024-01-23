@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -21,6 +22,7 @@ public class PlayerManager : NetworkBehaviour
     public TextMeshProUGUI lifeText; 
     public TextMeshProUGUI _score; 
     public TextMeshProUGUI _compteur; 
+    public MapSelect _mapSelect;
     //private bool _raceFinished = false;
 
 
@@ -36,7 +38,8 @@ public class PlayerManager : NetworkBehaviour
 
     private void Awake()
     {
-        _gameOnlineManager = FindObjectOfType<GameOnlineManager>(); 
+        _gameOnlineManager = FindObjectOfType<GameOnlineManager>();
+        _mapSelect = FindObjectOfType<MapSelect>();
         _movementController = GetComponent<MovementController>();
         if (_propController == null)
         {
@@ -72,6 +75,8 @@ public class PlayerManager : NetworkBehaviour
             GameObject uiPlayerObject = GameObject.FindWithTag("UIPlayer");
             _compteur = uiPlayerObject.transform.Find("compteur").GetComponent<TextMeshProUGUI>();
             _score = uiPlayerObject.transform.Find("score").GetComponent<TextMeshProUGUI>();
+
+            if(IsHost) _mapSelect.ToggleMapSelectVisibility(true);
 
             //lifeText = _gameOnlineManager.GetLifeText();
             //score = _gameOnlineManager.GetScore();

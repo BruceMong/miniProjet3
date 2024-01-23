@@ -16,10 +16,10 @@ public class GameOnlineManager : NetworkBehaviour
 
     private float _gameStartTime = 10.0f; // Durée du décompte en secondes
     private float _gameEndTime = 10.0f; // Durée du décompte en secondes
-    //private NetworkVariable<float> timeUntilGameStarts = new NetworkVariable<float>();
     PlayerManager _playerManagerClient = null;
-    //private static int playerSpawnIndex = 0;
-    
+    public MapSelect _mapSelect;
+
+
     private NetworkVariable<bool> _gameStart = new NetworkVariable<bool>(false);
     private string _result = "";
     //private bool _raceFinished = false;
@@ -29,6 +29,8 @@ public class GameOnlineManager : NetworkBehaviour
 
     private void Awake()
     {
+        _mapSelect = FindObjectOfType<MapSelect>();
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -36,6 +38,7 @@ public class GameOnlineManager : NetworkBehaviour
 
     public override void OnNetworkSpawn() //OnNetworkSpawn
     {
+
         //_playerManagerClient = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerManager>();
         if (IsServer)
         {
@@ -143,6 +146,7 @@ public class GameOnlineManager : NetworkBehaviour
             spawnPosPlayers = GameObject.FindGameObjectWithTag("SpawnPlatform");
             Debug.Log(spawnPosPlayers);
             Debug.Log("game start");
+            _mapSelect.ToggleMapSelectVisibility(false);
             _gameStart.Value = true;
             StartCompteurRaceClientRpc();
             StartCoroutine(StartGameTimer());
@@ -210,7 +214,8 @@ public class GameOnlineManager : NetworkBehaviour
         RaceFinishedClientRpc();
         TpPlayersStart();
         ResultPlayersList.Clear();
-        //go back lobby + reset var just keep score 
+        _mapSelect.ToggleMapSelectVisibility(true);
+
         _gameStart.Value = false;
         NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
 

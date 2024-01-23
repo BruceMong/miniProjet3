@@ -236,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 111722023}
   - component: {fileID: 111722024}
+  - component: {fileID: 111722025}
   m_Layer: 5
   m_Name: MapManager
   m_TagString: Untagged
@@ -275,6 +276,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPoints: []
+  _mapSelected: 
+--- !u!114 &111722025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111722022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ae251dd693efa4da4afbb6a8349525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &260601487
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a6fd1f0d2dfcc4e93f72cb5840d720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapSelect: {fileID: 0}
   _pseudo: 
 --- !u!1 &952974150
 GameObject:
@@ -1208,8 +1223,8 @@ RectTransform:
   - {fileID: 1946327108}
   m_Father: {fileID: 1541182047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 1, y: 1}
@@ -1256,8 +1271,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1633828161}
   m_HandleRect: {fileID: 1633828160}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1.0000001
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1312,6 +1327,8 @@ GameObject:
   - component: {fileID: 1541182050}
   - component: {fileID: 1541182049}
   - component: {fileID: 1541182048}
+  - component: {fileID: 1541182052}
+  - component: {fileID: 1541182051}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -1339,7 +1356,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 369.9, y: -213.05}
-  m_SizeDelta: {x: 228.9, y: 695.21}
+  m_SizeDelta: {x: 228.9, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1541182048
 MonoBehaviour:
@@ -1409,6 +1426,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541182046}
   m_CullTransparentMesh: 1
+--- !u!114 &1541182051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541182046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &1541182052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541182046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1559713623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1616,8 +1673,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1298974871}
   m_HandleRect: {fileID: 1298974870}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 0.5
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1961,7 +2018,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.000017166138, y: -0.000015333295}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1946327107
@@ -2004,8 +2061,8 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 111722023}
   - {fileID: 1696805124}
   - {fileID: 1559713626}
   - {fileID: 851651069}
-  - {fileID: 111722023}
   - {fileID: 548776478}
