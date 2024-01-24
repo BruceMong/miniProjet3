@@ -1684,7 +1684,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Delete Move",
+                    "name": "Lock Move",
                     "type": "Button",
                     "id": "837498ef-2f4d-4315-b75a-bb546c36b25e",
                     "expectedControlType": "Button",
@@ -1785,11 +1785,11 @@
                 {
                     "name": "",
                     "id": "ce041a53-2ed2-4e98-8c1a-72de505dba17",
-                    "path": "<XRController>{RightHand}/triggerButton",
+                    "path": "<XRController>{RightHand}/secondaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Delete Move",
+                    "action": "Lock Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2255,85 +2255,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Radial Menu",
-            "id": "8af2ee23-fd1a-4f8d-9f06-3c89e23c3655",
-            "actions": [
-                {
-                    "name": "Activate",
-                    "type": "Button",
-                    "id": "faacc8c2-3a01-4d95-a69d-3c2fff15d487",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Select",
-                    "type": "Button",
-                    "id": "9cc3ed2c-de6e-4163-8a65-598f5dc369a6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Touch Position",
-                    "type": "Value",
-                    "id": "4f6448af-533c-439f-aae8-67bc734e7649",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "4512a5ba-819b-4b45-bec2-b9820370ddda",
-                    "path": "<XRController>{RightHand}/thumbstickClicked",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Activate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b7d2cb79-c2e7-4988-b54e-f65ccbe5c8c5",
-                    "path": "<XRController>{RightHand}/secondaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Activate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8c93f47c-6288-4cd1-aefb-7c60221dba31",
-                    "path": "<XRController>{RightHand}/primaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f5c3f34a-e9d0-4925-be5b-2e9fb189473c",
-                    "path": "<XRController>/primary2DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Touch Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
