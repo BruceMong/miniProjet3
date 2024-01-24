@@ -1984,7 +1984,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2675373178862082374, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675373178862082374, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675373178862082374, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2838125502897295955, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2838125502897295955, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
@@ -1992,7 +2004,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4703107698418705484, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703107698418705484, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703107698418705484, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4752319681739052207, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
@@ -2036,6 +2056,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5320811973024323007, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5320811973024323007, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -2048,7 +2072,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6448143014834839354, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6448143014834839354, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6448143014834839354, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445441106164051051, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8445441106164051051, guid: 8ffd85bdbd0c4c1499212ba64f631f1f, type: 3}
@@ -3677,10 +3713,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 1
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
-  m_DisableVisualsWhenBlockedInGroup: 1
+  m_DisableVisualsWhenBlockedInGroup: 0
   m_StartingSelectedInteractable: {fileID: 0}
   m_StartingTargetFilter: {fileID: 0}
   m_HoverEntered:
@@ -3744,7 +3780,7 @@ MonoBehaviour:
   m_PlayHapticsOnHoverCanceled: 0
   m_HapticHoverCancelIntensity: 0
   m_HapticHoverCancelDuration: 0
-  m_AllowHoverHapticsWhileSelecting: 1
+  m_AllowHoverHapticsWhileSelecting: 0
   m_LineType: 0
   m_BlendVisualLinePoints: 1
   m_MaxRaycastDistance: 30
@@ -3774,8 +3810,8 @@ MonoBehaviour:
   m_TimeToAutoDeselect: 3
   m_EnableUIInteraction: 0
   m_BlockUIOnInteractableSelection: 0
-  m_AllowAnchorControl: 1
-  m_UseForceGrab: 1
+  m_AllowAnchorControl: 0
+  m_UseForceGrab: 0
   m_RotateSpeed: 180
   m_TranslateSpeed: 2.5
   m_AnchorRotateReferenceFrame: {fileID: 0}
