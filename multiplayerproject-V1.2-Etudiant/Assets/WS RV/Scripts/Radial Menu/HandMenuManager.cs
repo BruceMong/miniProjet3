@@ -1,3 +1,5 @@
+// MINI Projet XR RAY ne fonctionne pas
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
