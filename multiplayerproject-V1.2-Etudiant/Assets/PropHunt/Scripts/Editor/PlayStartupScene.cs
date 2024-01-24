@@ -1,4 +1,4 @@
-
+/*
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
@@ -45,5 +45,5 @@ class PlayStartupScene
             SceneManager.LoadScene(originalScenePath);
         }
     }
-}
+}*/
 
