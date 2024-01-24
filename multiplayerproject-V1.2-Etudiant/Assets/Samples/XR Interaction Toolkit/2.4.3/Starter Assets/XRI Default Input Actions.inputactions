@@ -1666,15 +1666,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Grab Move",
-                    "type": "Button",
-                    "id": "cfb29d37-3db0-4e5d-a73b-7d48a19e279e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Snap Turn",
                     "type": "Value",
                     "id": "44441ad6-5762-466d-ad54-aa44fcd61a5c",
@@ -1687,6 +1678,15 @@
                     "name": "Lock Move",
                     "type": "Button",
                     "id": "837498ef-2f4d-4315-b75a-bb546c36b25e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate Move",
+                    "type": "Button",
+                    "id": "133eea09-e205-41f5-bd16-5b0dab1a5459",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1779,6 +1779,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Lock Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "286f199d-a81a-4fda-a362-e4c792b6210f",
+                    "path": "<XRController>{RightHand}/gripButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
