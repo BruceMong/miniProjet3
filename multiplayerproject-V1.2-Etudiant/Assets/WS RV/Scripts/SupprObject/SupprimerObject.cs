@@ -1,24 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class SupprimerObject : MonoBehaviour
 {
-    // Update is called once per frame
-    void Update()
+    private XRRayInteractor xrRayInteractor;
+
+    private void Start()
     {
-        // Vérifie si la touche "Delete" est enfoncée
-        if (Input.GetKeyDown(KeyCode.Delete))
+        // Tentative de récupération de l'interacteur XR Ray attaché au GameObject
+        xrRayInteractor = GetComponent<XRRayInteractor>();
+
+        // Vérifie si l'interacteur a été attaché correctement
+        if (xrRayInteractor == null)
         {
-            // Appelle la fonction pour supprimer l'objet
-            SupprimerCetObjet();
+            Debug.LogError("L'interacteur XR Ray n'est pas attaché au GameObject.");
+        }
+        else
+        {
+            Debug.Log("Interacteur XR Ray attaché avec succès.");
+
+            // Ajoutez des listeners pour les événements d'interaction
+            xrRayInteractor.onSelectEntered.AddListener(OnSelectEntered);
+            Debug.Log("Listener d'événement ajouté.");
         }
     }
 
-    // Fonction pour supprimer l'objet
-    void SupprimerCetObjet()
+    private void OnSelectEntered(XRBaseInteractable interactable)
     {
-        // Détruit cet objet
-        Destroy(gameObject);
+        // Appelé lorsque le bouton de déclenchement est pressé
+        SupprimerObjet(interactable.gameObject);
+    }
+
+    private void SupprimerObjet(GameObject objetASupprimer)
+    {
+        Destroy(objetASupprimer);
     }
 }
