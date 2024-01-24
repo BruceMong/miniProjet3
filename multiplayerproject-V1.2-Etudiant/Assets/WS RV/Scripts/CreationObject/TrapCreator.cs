@@ -18,7 +18,7 @@ public class TrapCreator : MonoBehaviour
         // Charger le préfab "Trap Bumper" depuis les ressources
         GameObject trapBumper = Instantiate(trapBumperPrefab);
 
-        // Ajouter le composant XRGrabInteractable au cube
+        // Ajouter le composant XRGrabInteractable au trap bumper
         XRGrabInteractable existingGrabInteractable = trapBumper.GetComponent<XRGrabInteractable>();
 
         if (existingGrabInteractable == null)
@@ -32,10 +32,16 @@ public class TrapCreator : MonoBehaviour
         }
 
 
-        // Ajuster la position pour qu'il apparaisse à une nouvelle position par rapport à la position du contrôleur
-        trapBumper.transform.position = new Vector3(t.position.x + t.forward.x * 0.5f, t.position.y + 15f, t.position.z + t.forward.z * 0.5f);
 
+        // Ajuster la position pour qu'il apparaisse à la position spécifiée
+        trapBumper.transform.position = new Vector3(2.049f, 1.42f, -1.299f) + new Vector3(0.1f, 0.1f, 0.1f); // Incremental adjustment
 
+        // Ajuster l'échelle (scale)
+        trapBumper.transform.localScale = new Vector3(4f, 4f, 4f);
 
+        // Ajouter le layer "Props"
+        trapBumper.layer = LayerMask.NameToLayer("Props");
+
+        // Optional: Adjust other settings based on your specific requirements
     }
 }

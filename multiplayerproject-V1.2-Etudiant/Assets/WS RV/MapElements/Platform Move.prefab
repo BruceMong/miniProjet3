@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7218510564705084679}
   - component: {fileID: 6666853230261362339}
   - component: {fileID: 7623388564869532850}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Platform Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 586671445
+  GlobalObjectIdHash: 1050828435
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2771595803511008931}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TODO MoveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +139,10 @@ PrefabInstance:
     - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_Name
       value: PROFIL 520MM (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -202,6 +206,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PROFIL 520MM (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04
@@ -263,6 +271,10 @@ PrefabInstance:
     - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_Name
       value: PROFIL 520MM (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -326,6 +338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PROFIL 520MM (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.08
@@ -387,6 +403,10 @@ PrefabInstance:
     - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_Name
       value: PROFIL 520MM
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -450,6 +470,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PROFIL 520MM (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.12
@@ -511,6 +535,10 @@ PrefabInstance:
     - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_Name
       value: PROFIL 520MM (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753445069451088612, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7499729398764800650, guid: e3c4aa245ede86d46a0fc2a384ab5f3f, type: 3}
       propertyPath: m_LocalPosition.x
