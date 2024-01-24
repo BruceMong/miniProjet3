@@ -43,9 +43,8 @@ public class MapSelect : MonoBehaviour
                 }
             }
 
-            Debug.Log("Selected map: " + fileName);
             // Traitez la sélection ici
-            mapManager._mapSelected = fileName;
+            mapManager.SetMapSelected(fileName);
 
         }
     }

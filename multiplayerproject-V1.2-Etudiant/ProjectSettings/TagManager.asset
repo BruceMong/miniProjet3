@@ -8,6 +8,10 @@ TagManager:
   - SpawnPlatform
   - CinemachineTarget
   - UIPlayer
+  - Robot
+  - Marker
+  - robot
+  - MapSelect
   layers:
   - Default
   - TransparentFX

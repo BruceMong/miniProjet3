@@ -1,25 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-public class MapManager : MonoBehaviour
+public class MapManager : NetworkBehaviour
 {
     // Start is called before the first frame update
 
     string path = null;
 
     public List<Transform> SpawnPoints;
-    public string _mapSelected;
-    void Start()
+    public string _mapSelected = null;
+
+    private TextMeshProUGUI _textmapSelected;
+
+
+    public override void OnNetworkSpawn()
+
     {
+        Debug.Log(IsServer);
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             return;
 
         path = Application.streamingAssetsPath + "/";
-
-
+        //_textmapSelected = GameObject.FindWithTag("MapSelect").GetComponent<TextMeshProUGUI>();
+        //Debug.Log("sperme");
+        //Debug.Log(_textmapSelected);
         //for (int i = 0; i < nPropsToSpawn; i++)
         //{
         //    var sp = SpawnPoints[i];
@@ -29,6 +37,13 @@ public class MapManager : MonoBehaviour
         //}
     }
 
+    public void SetMapSelected(string mapSelected)
+    {
+        Debug.Log(_textmapSelected);
+        //_textmapSelected.text = mapSelected;
+        _mapSelected = mapSelected;
+
+    }
     // Cette fonction retourne un tableau de chaînes contenant les noms de tous les fichiers dans le dossier spécifié
     public string[] GetFileNamesInDirectory()
     {
