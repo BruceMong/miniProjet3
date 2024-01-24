@@ -51,15 +51,12 @@ public class MapDataManager : MonoBehaviour
         {
             if (prefab.CompareTag("Saveable"))
             {
-                Vector3? finalPosition = null;
-                float? speed = null;
+                Vector3 finalPosition = new Vector3(0,0,0);
+                float speed = 0;
 
-                // Vérifiez si c'est une plateforme mouvante et obtenez la position finale
-                Debug.Log(prefab.name);
 
 
                 var movablePlatform = prefab.GetComponent<MovePlateformValueSlider>();
-                Debug.Log(movablePlatform);
 
                 if (movablePlatform)
                 {
@@ -67,6 +64,8 @@ public class MapDataManager : MonoBehaviour
 
                     finalPosition = movablePlatform.posToMove; // Obtenez la position finale
                     speed = movablePlatform.speed;
+
+
                 }
 
                 var mapObject = new MapObject(
@@ -76,6 +75,7 @@ public class MapDataManager : MonoBehaviour
                     prefab.transform.localScale,
                     finalPosition,
                     speed );
+
 
                 CurrentMapData.AddObject(mapObject);
             }
