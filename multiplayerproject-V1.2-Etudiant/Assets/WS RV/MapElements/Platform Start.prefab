@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 349632733847501857}
   m_Layer: 7
   m_Name: Platform Start
-  m_TagString: PlateformStart
+  m_TagString: Saveable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4294818361729960143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ecafce1a28edc41bee42c951e9f796, type: 3}
+  m_Script: {fileID: 11500000, guid: c6aa8bb3be33d5448afde52cf0b39bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &349632733847501857

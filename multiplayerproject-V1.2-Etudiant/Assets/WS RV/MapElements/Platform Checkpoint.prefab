@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: -4361302963341544622}
   m_Layer: 7
   m_Name: Platform Checkpoint
-  m_TagString: Untagged
+  m_TagString: Saveable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7367169864993606270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ecafce1a28edc41bee42c951e9f796, type: 3}
+  m_Script: {fileID: 11500000, guid: c6aa8bb3be33d5448afde52cf0b39bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &6437443440176258703

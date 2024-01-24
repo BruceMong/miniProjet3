@@ -12,6 +12,7 @@ TagManager:
   - Marker
   - robot
   - MapSelect
+  - Saveable
   layers:
   - Default
   - TransparentFX
