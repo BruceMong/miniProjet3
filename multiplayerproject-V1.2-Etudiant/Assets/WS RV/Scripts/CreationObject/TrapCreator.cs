@@ -1,36 +1,41 @@
-/*using UnityEngine;
+using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class TrapCreator : MonoBehaviour
 {
-    public GameObject trapBumper;
+    public GameObject trapBumperPrefab;
 
-    public static void CreateTrapBumper(Transform t)
+    public void CreateTrapBumper(Transform t)
     {
-        // Assurez-vous que trapBumper est initialisé à l'avance
-        if (trapBumper == null)
+        if (trapBumperPrefab == null)
         {
-            Debug.LogError("trapBumper n'est pas initialisé. Assurez-vous de le faire dans l'inspecteur Unity ou dans votre code.");
+            Debug.LogError("Le préfab trapBumperPrefab n'est pas référencé. Assurez-vous de le faire dans l'inspecteur Unity.");
             return;
         }
-         
-        // Ajuster la position pour qu'il apparaisse légèrement en avant et en hauteur par rapport à la position du contrôleur
-        trapBumper.transform.position = t.position + t.forward * 0.5f + Vector3.up * 0.25f;
 
-        // Appliquer le layer "Grabbable" au cube
-        trapBumper.layer = LayerMask.NameToLayer("Grabbable");
+        Debug.Log("Création du piège bumper!");
+
+        // Charger le préfab "Trap Bumper" depuis les ressources
+        GameObject trapBumper = Instantiate(trapBumperPrefab);
 
         // Ajouter le composant XRGrabInteractable au cube
-        XRGrabInteractable grabInteractable = trapBumper.AddComponent<XRGrabInteractable>();
+        XRGrabInteractable existingGrabInteractable = trapBumper.GetComponent<XRGrabInteractable>();
 
-        // Ajouter le composant BoxCollider au cube
-        BoxCollider boxCollider = trapBumper.AddComponent<BoxCollider>();
+        if (existingGrabInteractable == null)
+        {
+            XRGrabInteractable grabInteractable = trapBumper.AddComponent<XRGrabInteractable>();
+            Debug.Log("XRGrabInteractable ajouté avec succès!");
+        }
+        else
+        {
+            Debug.LogWarning("Le composant XRGrabInteractable est déjà attaché à trapBumper.");
+        }
 
-        // Configurer la taille du BoxCollider
-        boxCollider.size = new Vector3(1f, 1f, 1f);
 
-        // Appliquer les transformations de scale
-        trapBumper.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        // Ajuster la position pour qu'il apparaisse à une nouvelle position par rapport à la position du contrôleur
+        trapBumper.transform.position = new Vector3(t.position.x + t.forward.x * 0.5f, t.position.y + 15f, t.position.z + t.forward.z * 0.5f);
+
+
+
     }
 }
-*/
