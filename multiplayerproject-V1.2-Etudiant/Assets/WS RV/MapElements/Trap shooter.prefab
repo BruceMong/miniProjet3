@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2759151553870619941}
   - component: {fileID: 7704038115800293248}
   - component: {fileID: 5308237673078564823}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trap shooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 296196058
+  GlobalObjectIdHash: 643351719
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -135,7 +135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4746008093292592178}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: spawnBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,10 +205,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7247253245550638931, guid: c631526148b153646a756fc448c730b1, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7681821379610854733, guid: c631526148b153646a756fc448c730b1, type: 3}
       propertyPath: m_Name
       value: BEARING BLOCK
@@ -234,6 +230,10 @@ PrefabInstance:
     - target: {fileID: 2471733452472690547, guid: 55046daf3c03fbc42932b243770be8fd, type: 3}
       propertyPath: m_Name
       value: AXLE 40MM
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471733452472690547, guid: 55046daf3c03fbc42932b243770be8fd, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6606313688231100272, guid: 55046daf3c03fbc42932b243770be8fd, type: 3}
       propertyPath: m_LocalPosition.x

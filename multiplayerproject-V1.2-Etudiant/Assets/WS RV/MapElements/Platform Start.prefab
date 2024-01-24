@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8330968550108727241}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 594848038362114230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7604136977335038304}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1780820355546024793}
   - component: {fileID: 459779559668275667}
   - component: {fileID: 9002087110758980495}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5421298676987036273}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7922034239883092793}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlacerPlayers
   m_TagString: SpawnPlatform
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 262382203607998651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8230188149082704803}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Platform Start
   m_TagString: PlateformStart
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 956598243058401522}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 3820407558069736238}
   - component: {fileID: 1723870075352880973}
   - component: {fileID: 3153003014765903484}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,7 +458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6193659338995434040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8308231467830169547}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 556610639987179997}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2299938432422937752}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
