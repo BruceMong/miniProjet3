@@ -21,7 +21,7 @@ public class MaintainRotationOnGrab : MonoBehaviour
 
     private void ResetRotation(SelectExitEventArgs args)
     {
-        if (!args.isCanceled) // Vérifie si la sélection n'est pas annulée
+        if (!args.isCanceled) // Vï¿½rifie si la sï¿½lection n'est pas annulï¿½e
         {
             transform.rotation = initialRotation;
         }

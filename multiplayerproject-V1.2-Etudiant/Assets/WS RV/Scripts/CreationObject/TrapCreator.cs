@@ -42,6 +42,8 @@ public class TrapCreator : MonoBehaviour
         // Ajouter le layer "Props"
         trapBumper.layer = LayerMask.NameToLayer("Props");
 
-        // Optional: Adjust other settings based on your specific requirements
+
+
+
     }
 }

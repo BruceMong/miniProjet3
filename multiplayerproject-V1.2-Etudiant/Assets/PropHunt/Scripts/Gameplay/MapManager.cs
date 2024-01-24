@@ -14,8 +14,8 @@ public class MapManager : NetworkBehaviour
     public List<Transform> SpawnPoints;
     public string _mapSelected = null;
 
-    private TextMeshProUGUI _textmapSelected;
-
+    public TextMeshProUGUI _textmapSelected;
+    public LaunchGameButton buttonLaunch;
 
     public override void OnNetworkSpawn()
 
@@ -25,7 +25,10 @@ public class MapManager : NetworkBehaviour
             return;
 
         path = Application.streamingAssetsPath + "/";
-        //_textmapSelected = GameObject.FindWithTag("MapSelect").GetComponent<TextMeshProUGUI>();
+        _textmapSelected = GameObject.FindWithTag("MapSelect").GetComponent<TextMeshProUGUI>();
+        _textmapSelected.text = "none";
+
+
         //Debug.Log("sperme");
         //Debug.Log(_textmapSelected);
         //for (int i = 0; i < nPropsToSpawn; i++)
@@ -37,10 +40,19 @@ public class MapManager : NetworkBehaviour
         //}
     }
 
+    public void setButton(LaunchGameButton button)
+    {
+        buttonLaunch = button;
+        buttonLaunch.CheckIfInteractable();
+
+    }
+
     public void SetMapSelected(string mapSelected)
     {
-        Debug.Log(_textmapSelected);
-        //_textmapSelected.text = mapSelected;
+        _textmapSelected.text = mapSelected;
+        buttonLaunch.CheckIfInteractable();
+
+
         _mapSelected = mapSelected;
 
     }
