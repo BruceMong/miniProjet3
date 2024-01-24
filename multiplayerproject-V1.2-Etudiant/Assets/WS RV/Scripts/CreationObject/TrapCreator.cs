@@ -9,13 +9,13 @@ public class TrapCreator : MonoBehaviour
     {
         if (trapBumperPrefab == null)
         {
-            Debug.LogError("Le préfab trapBumperPrefab n'est pas référencé. Assurez-vous de le faire dans l'inspecteur Unity.");
+            Debug.LogError("Le prï¿½fab trapBumperPrefab n'est pas rï¿½fï¿½rencï¿½. Assurez-vous de le faire dans l'inspecteur Unity.");
             return;
         }
 
-        Debug.Log("Création du piège bumper!");
+        Debug.Log("Crï¿½ation du piï¿½ge bumper!");
 
-        // Charger le préfab "Trap Bumper" depuis les ressources
+        // Charger le prï¿½fab "Trap Bumper" depuis les ressources
         GameObject trapBumper = Instantiate(trapBumperPrefab);
 
         // Ajouter le composant XRGrabInteractable au trap bumper
@@ -24,19 +24,19 @@ public class TrapCreator : MonoBehaviour
         if (existingGrabInteractable == null)
         {
             XRGrabInteractable grabInteractable = trapBumper.AddComponent<XRGrabInteractable>();
-            Debug.Log("XRGrabInteractable ajouté avec succès!");
+            Debug.Log("XRGrabInteractable ajoutï¿½ avec succï¿½s!");
         }
         else
         {
-            Debug.LogWarning("Le composant XRGrabInteractable est déjà attaché à trapBumper.");
+            Debug.LogWarning("Le composant XRGrabInteractable est dï¿½jï¿½ attachï¿½ ï¿½ trapBumper.");
         }
 
 
 
-        // Ajuster la position pour qu'il apparaisse à la position spécifiée
+        // Ajuster la position pour qu'il apparaisse ï¿½ la position spï¿½cifiï¿½e
         trapBumper.transform.position = new Vector3(2.049f, 1.42f, -1.299f) + new Vector3(0.1f, 0.1f, 0.1f); // Incremental adjustment
 
-        // Ajuster l'échelle (scale)
+        // Ajuster l'ï¿½chelle (scale)
         trapBumper.transform.localScale = new Vector3(4f, 4f, 4f);
 
         // Ajouter le layer "Props"
