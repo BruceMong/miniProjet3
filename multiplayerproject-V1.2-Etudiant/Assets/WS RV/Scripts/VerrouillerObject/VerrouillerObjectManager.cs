@@ -10,7 +10,7 @@ public class VerrouillerObjectManager : MonoBehaviour
     [SerializeField]
     private InputActionReference lockAction;
 
-    private bool isLocked = false;
+    private XRGrabInteractable grabInteractable;  // Utilisez XRGrabInteractable au lieu de XRGrabInteractor
 
     // Start is called before the first frame update
     void Start()
@@ -19,53 +19,31 @@ public class VerrouillerObjectManager : MonoBehaviour
 
         lockAction.action.Enable();
         lockAction.action.performed += OnLockToggle;
+
+        // Récupérer le composant XR Grab Interactable sur cet objet
+        grabInteractable = GetComponent<XRGrabInteractable>();
     }
 
     private void OnLockToggle(InputAction.CallbackContext context)
     {
         // Inverser l'état de verrouillage à chaque pression du bouton
-        isLocked = !isLocked;
+        bool isLocked = !lockRay.enabled;
 
         // Activer ou désactiver le rayon en fonction de l'état de verrouillage
         lockRay.enabled = isLocked;
 
         // Appeler la fonction de verrouillage/déverrouillage de l'objet ici
-        if (isLocked)
-        {
-            LockObject();
-        }
-        else
-        {
-            UnlockObject();
-        }
+        ChangeObjectState(isLocked);
     }
 
-    private void LockObject()
+    private void ChangeObjectState(bool isLocked)
     {
-        // Logique pour verrouiller l'objet
-        Debug.Log("Object Locked");
-        // Utilise la logique spécifique de VerrouillerObject si nécessaire
-    }
+        Debug.Log(isLocked ? "Object Locked" : "Object Unlocked");
 
-    private void UnlockObject()
-    {
-        // Logique pour déverrouiller l'objet
-        Debug.Log("Object Unlocked");
-        // Utilise la logique spécifique de VerrouillerObject si nécessaire
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Tu peux toujours utiliser le rayon ici pour des vérifications supplémentaires si nécessaire
-        if (isLocked && lockRay.enabled)
+        // Désactiver le composant XR Grab Interactable
+        if (grabInteractable != null)
         {
-            RaycastHit hit;
-            if (lockRay.TryGetCurrent3DRaycastHit(out hit))
-            {
-                GameObject objectToLock = hit.collider.gameObject;
-                // Logique pour verrouiller/déverrouiller l'objet ici
-            }
+            grabInteractable.enabled = !isLocked;
         }
     }
 }

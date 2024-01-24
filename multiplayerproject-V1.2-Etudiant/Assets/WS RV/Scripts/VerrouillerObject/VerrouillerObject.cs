@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class VerrouillerObject : MonoBehaviour
 {
     private XRRayInteractor xrRayInteractor;
+    private int propsLayer;
 
     private void Start()
     {
@@ -20,6 +21,8 @@ public class VerrouillerObject : MonoBehaviour
             xrRayInteractor.onSelectEntered.AddListener(OnSelectEntered);
             Debug.Log("Listener d'événement ajouté.");
         }
+
+        propsLayer = LayerMask.NameToLayer("Props");
     }
 
     private void OnSelectEntered(XRBaseInteractable interactable)
@@ -31,10 +34,12 @@ public class VerrouillerObject : MonoBehaviour
         if (estVerrouille)
         {
             DeverrouillerObjet(interactable.gameObject);
+            RetirerLayerProps(interactable.gameObject);
         }
         else
         {
             VerrouillerObjet(interactable.gameObject);
+            AjouterLayerProps(interactable.gameObject);
         }
     }
 
@@ -75,5 +80,17 @@ public class VerrouillerObject : MonoBehaviour
         // Vérifie si l'objet est verrouillé en regardant l'état du composant XRGrabInteractable
         XRGrabInteractable grabInteractable = objet.GetComponent<XRGrabInteractable>();
         return grabInteractable != null && !grabInteractable.enabled;
+    }
+
+    private void AjouterLayerProps(GameObject objet)
+    {
+        // Ajouter le layer "Props" à l'objet
+        objet.layer |= (1 << propsLayer);
+    }
+
+    private void RetirerLayerProps(GameObject objet)
+    {
+        // Retirer le layer "Props" de l'objet
+        objet.layer &= ~(1 << propsLayer);
     }
 }
