@@ -5,25 +5,41 @@ public class CubeCreator : MonoBehaviour
 {
     public static void CreateCube(Transform t)
     {
-        // Créer un cube à la position spécifiée
+        // Create a cube at the specified position
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-        // Ajuster la position pour qu'il apparaisse légèrement en avant et en hauteur par rapport à la position de t
+        // Adjust the position to appear slightly in front and above the position of t
         cube.transform.position = t.position + t.forward * 0.5f + Vector3.up * 0.25f;
 
-        // Appliquer le layer "Grabbable" au cube
+        // Apply the "Grabbable" layer to the cube
         cube.layer = LayerMask.NameToLayer("Grabbable");
 
-        // Ajouter le composant XRGrabInteractable au cube
+        // Add XRGrabInteractable component to the cube
         XRGrabInteractable grabInteractable = cube.AddComponent<XRGrabInteractable>();
 
-        // Ajouter le composant BoxCollider au cube
+        // Add BoxCollider component to the cube
         BoxCollider boxCollider = cube.AddComponent<BoxCollider>();
 
-        // Configurer la taille du BoxCollider
+        // Configure the BoxCollider size
         boxCollider.size = new Vector3(1f, 1f, 1f);
 
-        // Appliquer les transformations de scale
+        // Apply scale transformations
         cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        // Load the Audio Affordance prefab
+        GameObject audioAffordancePrefab = Resources.Load<GameObject>("Audio Affordance");
+
+        // Check if the prefab is loaded correctly
+        if (audioAffordancePrefab != null)
+        {
+            // Instantiate the prefab as a child of the cube
+            GameObject audioAffordance = Instantiate(audioAffordancePrefab, cube.transform);
+
+
+        }
+        else
+        {
+            Debug.LogError("Audio Affordance prefab not found. Make sure the path is correct.");
+        }
     }
 }
