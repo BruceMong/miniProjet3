@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 644803485340610630}
   - component: {fileID: 3065275700705986879}
   - component: {fileID: 4697544261742507262}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Checkpoint validated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,8 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8992806968790853929}
   - component: {fileID: 4706502990234227238}
-  - component: {fileID: 692763268561434238}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Platform Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +132,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7367169864993606270}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.7321815, y: 0.24000025, z: 7.481844}
   m_LocalScale: {x: 2.48, y: 2.48, z: 2.48}
   m_ConstrainProportionsScale: 1
@@ -164,18 +163,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.37
   m_Center: {x: 0, y: 0.19, z: 0}
---- !u!114 &692763268561434238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7367169864993606270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77700850a963477458decadf4e178156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8594771732695073532
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +175,7 @@ GameObject:
   - component: {fileID: 2328299316231875891}
   - component: {fileID: 5630261765207062209}
   - component: {fileID: 7318339184367566721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Checkpoint false
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,6 +281,10 @@ PrefabInstance:
     - target: {fileID: 8753409017600321587, guid: 82d35bff2f214694fbd39c5151438478, type: 3}
       propertyPath: m_Name
       value: Vis M8x25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753409017600321587, guid: 82d35bff2f214694fbd39c5151438478, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8887992336606756027, guid: 82d35bff2f214694fbd39c5151438478, type: 3}
       propertyPath: m_LocalScale.x
