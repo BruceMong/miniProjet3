@@ -14,8 +14,8 @@ public class GameOnlineManager : NetworkBehaviour
     private List<PlayerManager> playerManagers = new List<PlayerManager>();
     private List<ulong> ResultPlayersList = new List<ulong>();
 
-    private float _gameStartTime = 10.0f; // Durée du décompte en secondes
-    private float _gameEndTime = 10.0f; // Durée du décompte en secondes
+    private float _gameStartTime = 10.0f; // Durï¿½e du dï¿½compte en secondes
+    private float _gameEndTime = 10.0f; // Durï¿½e du dï¿½compte en secondes
     PlayerManager _playerManagerClient = null;
     public MapSelect _mapSelect;
 
@@ -162,7 +162,7 @@ public class GameOnlineManager : NetworkBehaviour
         float remainingTime = _gameStartTime;
         while (remainingTime > 0)
         {
-            UpdateCountdownClientRpc("La partie commence dans : \n" + remainingTime); // Mettre à jour le décompte sur les clients
+            UpdateCountdownClientRpc("La partie commence dans : \n" + remainingTime); // Mettre ï¿½ jour le dï¿½compte sur les clients
             yield return new WaitForSeconds(1f);
             remainingTime--;
             //Debug.Log(remainingTime);
@@ -188,8 +188,8 @@ public class GameOnlineManager : NetworkBehaviour
     [ClientRpc]
     private void StartRaceClientRpc()
     {
-        // Réactiver le contrôle du joueur
-        // Par exemple, permettre aux joueurs de se déplacer
+        // Rï¿½activer le contrï¿½le du joueur
+        // Par exemple, permettre aux joueurs de se dï¿½placer
         _playerManagerClient.DisableController(false);
 
         _playerManagerClient.UpdateCompteurUI("");
@@ -207,7 +207,7 @@ public class GameOnlineManager : NetworkBehaviour
         float remainingTime = _gameEndTime;
         while (remainingTime > 0)
         {
-            UpdateCountdownClientRpc("La partie se termine dans : \n" + remainingTime); // Mettre à jour le décompte sur les clients
+            UpdateCountdownClientRpc("La partie se termine dans : \n" + remainingTime); // Mettre ï¿½ jour le dï¿½compte sur les clients
             yield return new WaitForSeconds(1f);
             remainingTime--;
         }
@@ -215,6 +215,13 @@ public class GameOnlineManager : NetworkBehaviour
         TpPlayersStart();
         ResultPlayersList.Clear();
         _mapSelect.ToggleMapSelectVisibility(true);
+
+
+    
+    //detelete all objects from instantiateObjectNetwork 
+    MapManager mapManager = MapManager.Instance;
+    mapManager.DeleteAllObjectsNetwork();
+
 
         _gameStart.Value = false;
         NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);

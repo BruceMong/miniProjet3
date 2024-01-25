@@ -11,15 +11,18 @@ public class MapManager : NetworkBehaviour
     // Start is called before the first frame update
     // L'instance unique de la classe
     private static MapManager _instance;
+    public List<NetworkObject> instantiateObjectNetwork = new List<NetworkObject>();
 
-    // Propriété publique pour accéder à l'instance
+
+    
+    // Propriï¿½tï¿½ publique pour accï¿½der ï¿½ l'instance
     public static MapManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                // Crée l'instance si elle n'existe pas
+                // Crï¿½e l'instance si elle n'existe pas
                 _instance = FindObjectOfType<MapManager>();
                 if (_instance == null)
                 {
@@ -30,7 +33,7 @@ public class MapManager : NetworkBehaviour
             return _instance;
         }
     }
-    // Rendre le constructeur privé
+    // Rendre le constructeur privï¿½
     private MapManager() { }
 
 
@@ -48,7 +51,7 @@ public class MapManager : NetworkBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(this.gameObject); // Optionnel, pour garder l'instance à travers les scènes
+            DontDestroyOnLoad(this.gameObject); // Optionnel, pour garder l'instance ï¿½ travers les scï¿½nes
         }
         else
         {
@@ -95,17 +98,17 @@ public class MapManager : NetworkBehaviour
         _mapSelected = mapSelected;
 
     }
-    // Cette fonction retourne un tableau de chaînes contenant les noms de tous les fichiers dans le dossier spécifié
+    // Cette fonction retourne un tableau de chaï¿½nes contenant les noms de tous les fichiers dans le dossier spï¿½cifiï¿½
     public string[] GetFileNamesInDirectory()
     {
 
         string directoryPath = Application.streamingAssetsPath;
         try
         {
-            // Assurez-vous que le chemin spécifié existe
+            // Assurez-vous que le chemin spï¿½cifiï¿½ existe
             if (Directory.Exists(directoryPath))
             {
-                // Récupère tous les fichiers dans le dossier
+                // Rï¿½cupï¿½re tous les fichiers dans le dossier
                 string[] filePaths = Directory.GetFiles(directoryPath);
 
                 // Pour stocker uniquement les noms de fichiers
@@ -154,7 +157,7 @@ public class MapManager : NetworkBehaviour
         {
             string ObjectIDClean = mapObject.ObjectID.Replace("(Clone)", "");
             Debug.Log(ObjectIDClean);
-            GameObject prefab = Resources.Load<GameObject>(ObjectIDClean); // Assurez-vous que les préfabriqués sont dans un dossier Resources
+            GameObject prefab = Resources.Load<GameObject>(ObjectIDClean); // Assurez-vous que les prï¿½fabriquï¿½s sont dans un dossier Resources
             if (prefab == null)
             {
                 Debug.LogError("Prefab not found for ID: " + ObjectIDClean);
@@ -167,10 +170,19 @@ public class MapManager : NetworkBehaviour
             NetworkObject NetObj = instance.GetComponent<NetworkObject>();
             if (NetObj != null)
             {
+                instantiateObjectNetwork.Add(NetObj);
                 NetObj.Spawn();
             }
-                // Configurez d'autres propriétés si nécessaire
             }
+    }
+
+    public void DeleteAllObjectsNetwork()
+    {
+        foreach (NetworkObject NetObj in instantiateObjectNetwork)
+        {
+            NetObj.Despawn(true);
+        }
+        instantiateObjectNetwork.Clear();
     }
 
 
