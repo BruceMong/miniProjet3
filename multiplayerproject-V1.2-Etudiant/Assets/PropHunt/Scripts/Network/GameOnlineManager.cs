@@ -106,7 +106,7 @@ public class GameOnlineManager : NetworkBehaviour
 
 
                 var spawnPosition = spawnPosPlayers.transform.GetChild(playerManagers.IndexOf(playerManager)).position;
-                spawnPosition.y += 5;
+                spawnPosition.y += 10;
                 TeleportClientRpc(spawnPosition, rpcParams );
 
 

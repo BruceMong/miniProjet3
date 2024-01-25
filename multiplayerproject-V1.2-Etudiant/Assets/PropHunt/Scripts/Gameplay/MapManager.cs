@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,30 @@ using UnityEngine;
 public class MapManager : NetworkBehaviour
 {
     // Start is called before the first frame update
+    // L'instance unique de la classe
+    private static MapManager _instance;
+
+    // Propriété publique pour accéder à l'instance
+    public static MapManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // Crée l'instance si elle n'existe pas
+                _instance = FindObjectOfType<MapManager>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject("MapManager");
+                    _instance = obj.AddComponent<MapManager>();
+                }
+            }
+            return _instance;
+        }
+    }
+    // Rendre le constructeur privé
+    private MapManager() { }
+
 
     string path = null;
 
@@ -16,6 +41,20 @@ public class MapManager : NetworkBehaviour
 
     public TextMeshProUGUI _textmapSelected;
     public LaunchGameButton buttonLaunch;
+
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject); // Optionnel, pour garder l'instance à travers les scènes
+        }
+        else
+        {
+            Destroy(gameObject); // S'assure qu'il n'y a pas d'autres instances
+        }
+    }
 
     public override void OnNetworkSpawn()
 
@@ -94,14 +133,49 @@ public class MapManager : NetworkBehaviour
     }
 
 
-public void loadMap(string mapName)
+    public void LoadMap()
     {
+        if (_mapSelected == null || _mapSelected == "none") return;
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
+            return;
 
+        string filePath = Path.Combine(Application.streamingAssetsPath, _mapSelected);
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("File not found: " + filePath);
+            return;
+        }
+
+        string json = File.ReadAllText(filePath);
+        MapData mapData = JsonUtility.FromJson<MapData>(json);
+
+        foreach (MapObject mapObject in mapData.MapObjects)
+        {
+            string ObjectIDClean = mapObject.ObjectID.Replace("(Clone)", "");
+            Debug.Log(ObjectIDClean);
+            GameObject prefab = Resources.Load<GameObject>(ObjectIDClean); // Assurez-vous que les préfabriqués sont dans un dossier Resources
+            if (prefab == null)
+            {
+                Debug.LogError("Prefab not found for ID: " + ObjectIDClean);
+                continue;
+            }
+
+            GameObject instance = Instantiate(prefab, mapObject.Position, mapObject.Rotation);
+            //instance.transform.localScale = mapObject.Scale;
+
+            NetworkObject NetObj = instance.GetComponent<NetworkObject>();
+            if (NetObj != null)
+            {
+                NetObj.Spawn();
+            }
+                // Configurez d'autres propriétés si nécessaire
+            }
     }
 
 
-// Update is called once per frame
-void Update()
+    // Update is called once per frame
+    void Update()
     {
         
     }

@@ -16,6 +16,8 @@ public class GameStarter : NetworkBehaviour
         {
             gameOnlineManager = FindObjectOfType<GameOnlineManager>();
             gameOnlineManager.GameStart();
+            MapManager.Instance.LoadMap();
+
             Debug.Log("gameStarter");
 
         }
