@@ -276,8 +276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ce0651067b40e4880277a34c12e0e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instantiateObjectNetwork: []
   SpawnPoints: []
   _mapSelected: 
+  _textmapSelected: {fileID: 0}
+  buttonLaunch: {fileID: 0}
 --- !u!114 &111722025
 MonoBehaviour:
   m_ObjectHideFlags: 0
