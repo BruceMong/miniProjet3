@@ -15,8 +15,9 @@ public class GameStarter : NetworkBehaviour
         if (gameOnlineManager == null && IsServer)
         {
             gameOnlineManager = FindObjectOfType<GameOnlineManager>();
-            gameOnlineManager.GameStart();
             MapManager.Instance.LoadMap();
+
+            gameOnlineManager.GameStart();
 
             Debug.Log("gameStarter");
 
